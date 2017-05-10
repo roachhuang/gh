@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges } from '@angular/core';
 import { Router } from '@angular/router';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validator } from '@angular/forms';
 
 import * as Hero from '../hero';
 import { HeroService } from '../hero.service';
@@ -13,9 +14,32 @@ import * as gg from '../mock-data';
 export class HeroesComponent implements OnInit {
   errorMessage: string;
   heroes: Hero.R[];
+  // formGroup contains FormControl
+  heroForm: FormGroup;
+  // formError _messages: { [id: string]:}
   selectedHero: Hero.R;
 
-  constructor(private router: Router, private heroService: HeroService) { };
+  constructor(private _fb: FormBuilder, private router: Router, private heroService: HeroService) {
+    this.createForm();
+  };
+
+  createForm() {
+    this.heroForm = this._fb.group({
+      id: '',
+      type: '',
+      name: '',
+      price: '',
+      imgUrl: ''
+    });
+    // to set all value use setvalue method.
+    this.heroForm.patchValue({
+      imgUrl: 'http://lorempixel.com/400/200',
+    })
+  }
+
+  onSubmit() {
+    this.add(this.heroForm.value);
+  }
 
   ngOnInit() {
     /* create mock data, To remove the collection: db.prods.drop
@@ -50,13 +74,6 @@ export class HeroesComponent implements OnInit {
       .subscribe(
       res => this.selectedHero = null,
       error => this.errorMessage = <any>error);
-
-    /*
-    .then(hero => {
-    this.heroes.push(hero);
-    this.selectedHero = null;
-  });
-  */
   }
 
   delete(hero: Hero.R): void {

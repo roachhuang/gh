@@ -41,8 +41,8 @@ export class HeroService {
     // tslint:disable-next-line:member-ordering
     private headers = new Headers({ 'Content-Type': 'application/json' });
 
-    update(hero: Hero.W): Observable<Hero.W> {
-        const url = `${this.heroesUrl}/${hero.id}`;
+    update(hero: any): Observable<any> {
+        const url = `${this.heroesUrl}/${hero._id}`;
         return this.http
             .put(url, JSON.stringify(hero), { headers: this.headers })
             .map(res => res.json().data);

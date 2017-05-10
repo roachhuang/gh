@@ -2,7 +2,7 @@
 <div *ngIf='heroes'>
   <ul class="heroes">
     <li *ngFor="let hero of heroes" (click)='onSelect(hero)' [class.selected]='hero === selectedHero'>
-      <span class="badge">{{hero.id}}</span> {{hero.name}}      
+      <span class="badge">{{hero.id}}</span> {{hero.name}}
       <button class="delete" (click)="delete(hero); $event.stopPropagation()">x</button>
     </li>
   </ul>
@@ -12,12 +12,40 @@
   <h2>
     {{selectedHero.name | uppercase}} is my hero
   </h2>
-  <div>
-    <label>Hero name:</label> <input #heroName />
-    <button (click)="add(heroName.value); heroName.value=''">
+
+  <form [formGroup]="heroForm" (ngSubmit)='onSubmit()' novalidate>
+    <button type="submit" [disabled]="heroForm.pristine" class="btn btn-success">Save</button> &nbsp;
+    <div class="form-group">
+      <label type='number' class="center-block">ID:
+        <input class="form-control" formControlName="id">
+      </label>
+    </div>
+    <div class="form-group">
+      <label class="center-block">Name:
+        <input class="form-control" formControlName="name">
+      </label>
+    </div>
+    <div class="form-group">
+      <label class="center-block">Price:
+        <input class="form-control" formControlName="price">
+      </label>
+    </div>
+    <div class="form-group">
+      <label class="center-block">Type:
+        <input class="form-control" formControlName="type">
+      </label>
+    </div>
+  </form>
+  <p>Form value: {{ heroForm.value | json }}</p>
+  <p>Form status: {{ heroForm.status | json }}</p>
+
+  <!-- <label>Hero name:</label> <input #heroName /> -->
+  <button (click)="add(heroName.value); heroName.value=''">
     Add
   </button>
-  </div>
+
+  <hr>
+
   <div>
     <button (click)="gotoDetail()">View Details</button>
   </div>

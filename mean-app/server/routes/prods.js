@@ -36,7 +36,7 @@ router.route('/hero')
     // save the data received
     data.save(function (err) {
       if (err) {
-        console.log(err);        
+        console.log(err);
         return res.send(500, err);
       }
       // give some success message
@@ -62,7 +62,7 @@ router.route('/hero/:id')
   .put(function (req, res) {
     Prods.findByIdAndUpdate(req.params.id, req.body, function (err, post) {
       console.log(req.body);
-      if (err) return next(err);
+      if (err) res.send(500, err);
       res.status(200).json(post);
     });
   })

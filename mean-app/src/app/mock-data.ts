@@ -27,7 +27,7 @@ export function createRandomCatalog (num: number) {
       type: obj.type,
       name: obj.name,
       price: obj.price,
-      imgUrl: `//lorempixel.com/400/${200 + num}`
+      imgUrl: 'http://lorempixel.com/400/200'
     });
   }
   return catalog;

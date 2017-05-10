@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-// import { RouterModule } from '@angular/router';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { PostsComponent } from './posts/posts.component';
@@ -17,13 +17,14 @@ import { HeroService } from './hero.service';
   declarations: [
     AppComponent,
     PostsComponent,
-    HeroDetailComponent,
     DashboardComponent,
-    HeroesComponent
+    HeroesComponent,
+    HeroDetailComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule, // <-- #2 add to Angular module imports
     HttpModule,
     AppRoutingModule,
   ],

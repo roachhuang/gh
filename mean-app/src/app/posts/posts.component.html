@@ -1,0 +1,23 @@
+<!--
+<div *ngIf="posts">
+  <li *ngFor="let post of posts" class='col-1-4'>
+    <h2>{{post.title}} details!</h2>
+    <div>
+      <label>id: </label>{{post.body}}
+    </div>
+  </li>
+  <div>
+    <label>name: </label>
+    <input [(ngModel)]="post.title" placeholder="name" />
+  </div>
+</div>
+-->
+
+<div class='grid grid-pad'>
+  <div *ngFor="let post of posts" class='col-1-4'>
+    <div class="module hero">
+      <h4> {{ post.title }}</h4>
+    </div>
+  </div>
+</div>
+

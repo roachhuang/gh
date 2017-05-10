@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <script src="library.js"></script>
+</head>
+
+<body>
+    <!--
+    A section labeled "Search Product by Id" that includes an input field and a button labeled "Search Product".
+    A section labeled "Examined Product" that shows the products id, price, and type.
+    A section labeled "List of Similar Products" that has a table that displays a list of similar products.
+    A section labeled" List of All Products" that has a table that displays a list of all products.
+    -->
+    <div>
+        <h3>Search Product by Id</h3>
+        <input id="idInput">
+        <button id="searchByIdBtn">Search Product</button>
+    </div>
+    <div>
+        <h3>Search Product by Type</h3>
+        <input id="typeInput">
+        <button id="searchByTypeBtn">Search Type</button>
+    </div>
+    <div>
+        <h3>Search Product by Price</h3>
+        <input id="priceInput">
+        <button id="searchByPriceBtn">Search Price</button>
+    </div>
+    <div>
+        <h3>Examined Product</h3>
+        <p id="productText">Product Id: <br>Price: <br>Type: </p>
+        <h3>List of Similar Products</h3>
+        <table id="similarTable" width="300px" border="1">
+            <tr>
+                <th>ProductId</th>
+                <th>Type</th>
+                <th>Price</th>
+                <th>Examine</th>
+            </tr>
+        </table>
+    </div>
+    <div>
+        <h3>List of All Products</h3>
+        <table id="allTable" width="300px" border="1">
+            <tr>
+                <th>ProductId</th>
+                <th>Type</th>
+                <th>Price</th>
+                <th>Examine</th>
+            </tr>
+        </table>
+    </div>
+    <script src="productCatalog.js"></script>
+</body>
+
+</html>

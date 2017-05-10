@@ -1,0 +1,41 @@
+<h1>Detail</h1>
+<!--
+<div *ngIf="hero">
+  <h2>{{hero.name}} details!</h2>
+  <div><label>id: </label>{{hero.id}}</div>
+  <div>
+    <label>name: </label>
+    <input [(ngModel)]="hero.name" placeholder="name" />
+  </div>
+</div>
+-->
+
+<div *ngIf="hero">
+  <div class="table-responsive">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>name</th>
+          <th>price</th>
+          <th>img</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{hero.name}}</td>
+          <td>{{hero.price}}</td>
+          <td><img [attr.src]='hero.imgUrl'/></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div>
+    <label>name: </label>
+    <input [(ngModel)]="hero.name" placeholder="name" />
+    <button (click)="save()">Save</button>
+  </div>
+</div>
+
+<button (click)="goBack()">Back</button>
+<p class="error" *ngIf="errorMessage">{{errorMessage}}</p>

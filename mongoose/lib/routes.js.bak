@@ -1,0 +1,99 @@
+'use strict';
+var user = require('./lib/user');
+
+// Defining the Routes for our API
+
+// Start the Router
+var router = express.Router();
+
+// A simple middleware to use for all Routes and Requests
+router.use(function(req, res, next) {
+// Give some message on the console
+console.log('An action was performed by the server.');
+// Is very important using the next() function, without this the Route stops here.
+next();
+});
+
+// Default message when access the API folder through the browser
+var app;
+app = router.get('/', function(req, res) {
+// Give some Hello there message
+res.json({ message: 'Hello SPA, the API is working!' });
+});
+
+// When accessing the user Routes
+app = router.route('/user');
+
+app.post(function(req, res) {
+	// create a new instance of the user model
+	var user = new User();
+	// set the users properties (comes from the request)
+	user.name = req.body.name;
+	user.category = req.body.category;
+	user.price = req.body.price;	
+	// save the data received
+	user.save(function(err) {
+		if (err)
+			res.send(err);
+		// give some success message
+		res.json({ message: 'user successfully created!' });
+	});
+})
+
+// get all the users when a method passed is GET
+app.get(function(req, res) {
+	user.find(function(err, users) {
+		if (err)
+			res.send(err);
+		res.json(users);
+	});
+});
+	
+// on accessing user Route by id
+router.route('/users/:user_id')
+// get the user by id
+app.get(function(req, res) {
+	user.findById(req.params.user_id, function(err,
+	user) {
+	if (err)
+	res.send(err);
+	res.json(user);
+	});
+});
+
+// update the user by id
+app.put(function(req, res) {
+	user.findById(req.params.user_id, function(err, user) {
+		if (err)
+			res.send(err);
+		// set the users properties (comes from the request)
+		user.name = req.body.name;
+		user.company = req.body.company;
+		user.title = req.body.title;
+		user.description = req.body.description;
+		user.picture = req.body.picture;
+		user.schedule = req.body.schedule;
+		// save the data received
+		user.save(function(err) {		
+			if (err)
+				res.send(err);
+			// give some success message
+			res.json({ message: 'user successfully updated!'});
+		});
+	});
+});
+
+// delete the user by id
+app.delete(function(req, res) {
+	user.remove({
+	_id: req.params.user_id
+	}, function(err, user) {
+	if (err)
+	res.send(err);
+	// give some success message
+	res.json({ message: 'user successfully deleted!' });
+	});
+});
+
+// register the route
+app.use('/api', router);

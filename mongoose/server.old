@@ -1,0 +1,139 @@
+'use restrict'
+// Import the Modules
+var express = require('express');
+var app = express();
+
+var bodyParser = require('body-parser');
+// configure app
+app.use(bodyParser.urlencoded({extended:true}));
+app.use(bodyParser.json());
+
+app.use(express.static(__dirname + '/public'));
+
+/*
+app.get('/', function(req, res) {
+    res.sendFile( __dirname + '/public/index.html')
+});
+*/
+
+app.use(function(err, req, res, next) {
+	console.error(err.stack);
+	res.status(500).json('Something broke!');
+});
+
+var port = process.env.PORT || 3000; // where the application will run
+
+var User = require('./lib/speaker.js');
+// Defining the Routes for our API
+
+// Start the Router (Router-level middleware)
+// Router-level middleware works just like application-level middleware except it is bound to an instance of //express.Router().
+
+var router = app.router('/api');
+
+// A simple middleware to use for all Routes and Requests
+// a middleware with no mount path, gets executed for every request to the router
+router.use(function(req, res, next) {
+	// Give some message on the console
+	console.log('url:%s, method:%s', req.originalUrl, req.method);
+    // Is very important using the next() function, without this the Route stops here.
+	next();
+});
+
+/*
+// Default message when access the API folder through the browser
+router.get('/', function(req, res) {
+    // Give some Hello there message
+	res.json({ message: 'Hello SPA, the API is working!' });
+});
+*/
+
+// When accessing the users Routes. this is just for url, nothing to do with collection name.
+router.route('/user')
+	// create a user when the method passed is POST
+	.post(function(req, res) {
+        // create a new instance of the user model
+		var data = new User();	// User is a schema constructor
+
+        // set the users properties (comes from the request)
+	 data.name = req.body.name;
+        data.category = req.body.category;
+        data.price = req.body.price;
+        //user.description = req.body.description;
+        //user.picture = req.body.picture;      
+
+        // save the data received
+		data.save(function(err) {
+			if (err)
+				res.send(err);
+
+        // give some success message
+		res.status(201).json(data);  
+		});
+	})
+		
+	// get all the users when a method passed is GET
+	.get(function(req, res) {		
+		User.find(function(err, data) {
+			if (err)
+				res.send(err);
+			res.json(data);
+		});
+	});
+
+// on accessing user Route by id
+router.route('/user/:user_id')
+	// get the user by id
+	.get(function(req, res) {
+		User.findById(req.params.user_id, function(err, data) {
+			if (err)
+				res.send(err);
+			res.json(data);
+		});
+	})
+
+	// update the user by id
+	.put(function(req, res) {
+		console.log(req.params.user_id);
+		User.findById(req.params.user_id, function(err, data) {
+			if (err)
+				res.send(err);
+
+            // set the users properties (comes from the request)		
+            data.name = req.body.name;
+            data.category = req.body.category;
+            data.price = req.body.price;
+            //user.description = req.body.description;
+            //user.picture = req.body.picture;           
+
+            // save the data received
+			data.save(function(err) {
+				if (err)
+					res.send(err);
+
+                // give some success message
+			res.json(data);
+			});
+
+		});
+	})
+	 
+	.delete(function(req, res) {
+		console.log(req.params.user_id);
+		User.remove({ _id: req.params.user_id}, function(err, data) {
+			if (err)
+				res.send(err);
+        // give some success message
+		res.sendStatus(200);
+		});
+	});
+	
+// register the route
+// mount the router on the app
+app.use('/api', router);
+
+// start the server
+app.listen(port, function(){
+    console.log('Magic happens on port ' + port);	
+});
+

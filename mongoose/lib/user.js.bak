@@ -1,0 +1,11 @@
+// Import Mongoose
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
+
+// Set the data types, properties and default values to our Schema.
+var userSchema = new Schema({
+	name: { type: String, default: '' },
+	category: { type: String, default: '' },
+	price: { type: String, default: '' }
+});
+module.exports = mongoose.model('User', userSchema);	// correction name is user

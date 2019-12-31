@@ -14,7 +14,7 @@
 	"dependencies": {		
 		"express": "4.9.2",
 		"morgan": "~1.0.0",
-		"mongoose": "3.8.8",
+		"mongoose": "5.8.3",
 		"body-parser": "~1.0",
         "method-override": "~1.0.0",
         "nodemon": "1.2.0"
